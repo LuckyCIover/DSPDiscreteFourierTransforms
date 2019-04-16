@@ -447,6 +447,7 @@ int main(int argc, char *argv[])
 					cout << "Err_norm: " << norm << endl;
 					cout << "DFT_time: " << seconds_DFT << " seconds" << endl;
 					cout << "FFT_time: " << seconds_FFT << " seconds" << endl;
+                    cout << "Increment ratio: " << seconds_DFT / seconds_FFT << endl;
 					cout << "---------------------------------------" << endl;
 
 					DFT_time.insert(DFT_time.begin(), seconds_DFT);
@@ -536,6 +537,7 @@ int main(int argc, char *argv[])
 					cout << "Err_norm: " << norm << endl;
 					cout << "CONV_time: "  << seconds_CONV << " seconds" << endl;
 					cout << "FCONV_time: " << seconds_FCONV << " seconds" << endl;
+                    cout << "Increment ratio: " << seconds_CONV / seconds_FCONV << endl;
 					cout << "---------------------------------------" << endl;
 
 					CONV_time.insert(CONV_time.begin(), seconds_CONV);
