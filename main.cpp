@@ -431,11 +431,20 @@ int main(int argc, char *argv[])
 					QueryPerformanceCounter(&end_FFT);
 					QueryPerformanceFrequency(&freq2);
 
+					double norm = 0.0;
+
+					for (size_t k = 0; k < C1.size(); k++)
+					{
+						if (norm < abs(Y_DFT[k] - Y_FFT[k]))
+							norm = abs(Y_DFT[k] - Y_FFT[k]);
+					}
+
 					double seconds_DFT = (double)(end_DFT.QuadPart - begin_DFT.QuadPart) / freq1.QuadPart;
 					double seconds_FFT = (double)(end_FFT.QuadPart - begin_FFT.QuadPart) / freq2.QuadPart;
 
 					cout.precision(numeric_limits<double>::max_digits10 + 1);
 					cout << "N: " << N_current << endl;
+					cout << "Err_norm: " << norm << endl;
 					cout << "DFT_time: " << seconds_DFT << " seconds" << endl;
 					cout << "FFT_time: " << seconds_FFT << " seconds" << endl;
 					cout << "---------------------------------------" << endl;
@@ -488,7 +497,6 @@ int main(int argc, char *argv[])
 				size_t M = B.size();
 				size_t L_current = L;
 				size_t M_current;
-				double norm = 0.0;
 
 				LARGE_INTEGER begin_СONV, end_CONV, begin_FCONV, end_FCONV, freq1, freq2;
 
@@ -511,6 +519,8 @@ int main(int argc, char *argv[])
 					QueryPerformanceCounter(&end_FCONV);
 					QueryPerformanceFrequency(&freq2);
 
+					double norm = 0.0;
+
 					for (size_t k = 0; k < C1.size(); k++)
 					{
 						if (norm < abs(C2[k] - C1[k]))
@@ -521,6 +531,7 @@ int main(int argc, char *argv[])
 					double seconds_FCONV = (double)(end_FCONV.QuadPart - begin_FCONV.QuadPart) / freq2.QuadPart;
 
 					cout.precision(numeric_limits<double>::max_digits10 + 1);
+					cout << "L: " << L_current << endl;
 					cout << "M: " << M_current << endl;
 					cout << "Err_norm: " << norm << endl;
 					cout << "CONV_time: "  << seconds_CONV << " seconds" << endl;
@@ -539,7 +550,6 @@ int main(int argc, char *argv[])
 					B.resize(M_current);
 				}
 
-
 				ofstream outputFile(argv[5]);
 
 				if (outputFile.is_open())
@@ -547,9 +557,8 @@ int main(int argc, char *argv[])
 					outputFile.precision(5);
 					outputFile.setf(ios::fixed);
 				
-
 					for (size_t m = 0; m < CONV_time.size(); m++)
-						outputFile << M_current + (m + 1) * (M / 10) << " " << CONV_time[m] << " " << FCONV_time[m] << endl;
+						outputFile << L_current + (m + 1) * (L / 10)<< " " << M_current + (m + 1) * (M / 10) << " " << CONV_time[m] << " " << FCONV_time[m] << endl;
 				}
 				else
 				{
