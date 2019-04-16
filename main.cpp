@@ -557,8 +557,13 @@ int main(int argc, char *argv[])
 					outputFile.precision(5);
 					outputFile.setf(ios::fixed);
 				
-					for (size_t m = 0; m < CONV_time.size(); m++)
-						outputFile << L_current + (m + 1) * (L / 10)<< " " << M_current + (m + 1) * (M / 10) << " " << CONV_time[m] << " " << FCONV_time[m] << endl;
+                    for (size_t m = 0; m < CONV_time.size(); m++)
+                    {
+                        if (atoi(argv[2]) == 1)
+                            outputFile << L_current + (m + 1) * (L / 10) << " " << M_current + (m + 1) * (M / 10) << " " << CONV_time[m] << " " << FCONV_time[m] << endl;
+                        else
+                            outputFile << L_current << " " << M_current + (m + 1) * (M / 10) << " " << CONV_time[m] << " " << FCONV_time[m] << endl;
+                    }
 				}
 				else
 				{
